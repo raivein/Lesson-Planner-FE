@@ -32,6 +32,7 @@ class App extends Component {
 			robots: [],
 			searchfield: "",
 			openModal: false,
+			modalKind: "",
 		};
 	}
 
@@ -81,8 +82,9 @@ class App extends Component {
 			.catch((err) => console.log(err));
 	};
 
-	onOpenModal = (event) => {
+	onOpenModal = (event, modalKind) => {
 		this.setState({ openModal: event });
+		this.setState({ modalKind: modalKind });
 	};
 
 	render() {
@@ -98,7 +100,10 @@ class App extends Component {
 					resetState={this.resetState}
 				/>
 				{this.state.openModal ? (
-					<Modal OpenModal={this.onOpenModal} />
+					<Modal
+						OpenModal={this.onOpenModal}
+						modalKind={this.state.modalKind}
+					/>
 				) : this.state.route === "home" ? (
 					<div>
 						<Logo />

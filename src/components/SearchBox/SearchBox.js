@@ -3,7 +3,8 @@ import React from "react";
 const SearchBox = ({ SearchChange, SearchField, OpenModal }) => {
 	return (
 		<div className="mw9 center ph3-ns">
-			<button className="w-10 grow f4 link pv2 dib white bg-light-purple left pointer">
+      <button className="w-10 grow f4 link pv2 dib white bg-light-purple left pointer"
+      onClick={() => OpenModal(true, "create")}>
 				Create
 			</button>
 			<input
@@ -14,7 +15,7 @@ const SearchBox = ({ SearchChange, SearchField, OpenModal }) => {
 			/>
 			<button
 				className="w-10 grow f4 link pv2 dib white bg-light-red pointer"
-				onClick={() => OpenModal(true)}
+				onClick={() => OpenModal(true, "delete")}
 			>
 				Delete
 			</button>

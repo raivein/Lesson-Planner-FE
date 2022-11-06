@@ -21,7 +21,6 @@
 .modalContainer .title {
   display: inline-block;
   text-align: center;
-  margin-top: 10px;
 }
 
 .titleCloseBtn {
@@ -49,7 +48,7 @@
   flex: 20%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .modalContainer .footer button {
@@ -70,4 +69,16 @@
 
 #openBtn {
   background-color: rgb(171, 221, 236);
+}
+
+.modalContainer h1 {
+  margin: 0;
+}
+
+.createForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: left;
+  grid-row-gap: 10px;
+
 }
