@@ -7,7 +7,13 @@ import Rank from "./components/Rank/Rank.js";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition.js";
 import SignIn from "./components/SignIn/SignIn.js";
 import Register from "./components/Register/Register.js";
+import CardList from "./components/CardList/CardList.js";
+import SearchBox from "./components/SearchBox/SearchBox.js";
+import Scroll from "./components/Scroll/Scroll.js";
+import ErrorBoundry from "./components/ErrorBoundry/ErrorBoundry.js";
 import Clarifai from "clarifai";
+import { useState } from "react";
+import Modal from "./components/Modal/Modal.js";
 
 const app = new Clarifai.App({
 	apiKey: "e94b1660d9324eed85b54a57006a82ef",
@@ -23,16 +29,40 @@ class App extends Component {
 			box: {},
 			route: "signin",
 			isSignedIn: false,
+			robots: [],
+			searchfield: "",
+			openModal: false,
 		};
 	}
 
+	resetState = () => {
+		this.setState({
+			openModal: false,
+		});
+	};
+
+	componentDidMount() {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => {
+				return response.json();
+			})
+			.then((users) => {
+				this.setState({ robots: users });
+			});
+	}
+
 	onRouteChange = (route) => {
-		if (route === "signout") {
+		if (route === "signin") {
 			this.setState({ isSignedIn: false });
+			this.resetState();
 		} else if (route === "home") {
 			this.setState({ isSignedIn: true });
 		}
 		this.setState({ route: route });
+	};
+
+	onSearchChange = (event) => {
+		this.setState({ searchfield: event.target.value });
 	};
 
 	// function below will affect the state of the input
@@ -51,24 +81,55 @@ class App extends Component {
 			.catch((err) => console.log(err));
 	};
 
+	onOpenModal = (event) => {
+		this.setState({ openModal: event });
+	};
+
 	render() {
+		const { robots, searchfield } = this.state;
+		const filteredRobots = robots.filter((robot) => {
+			return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+		});
 		return (
 			<div className="App">
 				<Navigation
 					isSignedIn={this.state.isSignedIn}
 					onRouteChange={this.onRouteChange}
+					resetState={this.resetState}
 				/>
-				{this.state.route === "home" ? (
+				{this.state.openModal ? (
+					<Modal OpenModal={this.onOpenModal} />
+				) : this.state.route === "home" ? (
 					<div>
 						<Logo />
-						<Rank />
+						<div>
+							<SearchBox
+								SearchChange={this.onSearchChange}
+								OpenModal={this.onOpenModal}
+							/>
+							<br />
+							<hr className="b--green" />
+							<br />
+							{!robots.length ? (
+								<h1>Loading...</h1>
+							) : (
+								<Scroll>
+									{/* created an ErrorBoundry for CardList component */}
+									<ErrorBoundry>
+										<CardList robots={filteredRobots} />
+									</ErrorBoundry>
+								</Scroll>
+							)}
+						</div>
+
+						{/* <Rank /> */}
 						{/* onInputChange function will be used to call back to the function in the class when it is used inside the ImageLinkForm component */}
 						{/* onButtonSubmit passes the function to the ImageLinkForm.js that will be triggered in the App.js when it is triggered in the ImageLinkForm.js */}
-						<ImageLinkForm
+						{/* <ImageLinkForm
 							onInputChange={this.onInputChange}
 							onButtonSubmit={this.onButtonSubmit}
 						/>
-						<FaceRecognition imageUrl={this.state.imageUrl} />
+						<FaceRecognition imageUrl={this.state.imageUrl} /> */}
 					</div>
 				) : this.state.route === "signin" ? (
 					<SignIn onRouteChange={this.onRouteChange} />
