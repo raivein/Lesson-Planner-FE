@@ -1,0 +1,7 @@
+article {
+  position: absolute;
+  top: 45%;
+  left: 50vw;
+  right: 50vw;
+  transform: translate(-50%, -50%);
+}
