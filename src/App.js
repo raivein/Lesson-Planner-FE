@@ -2,39 +2,45 @@ import React, { Component } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation/Navigation.js";
 import Logo from "./components/Logo/Logo.js";
-import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm.js";
-import Rank from "./components/Rank/Rank.js";
-import FaceRecognition from "./components/FaceRecognition/FaceRecognition.js";
 import SignIn from "./components/SignIn/SignIn.js";
 import Register from "./components/Register/Register.js";
 import CardList from "./components/CardList/CardList.js";
 import SearchBox from "./components/SearchBox/SearchBox.js";
 import Scroll from "./components/Scroll/Scroll.js";
 import ErrorBoundry from "./components/ErrorBoundry/ErrorBoundry.js";
-import Clarifai from "clarifai";
-import { useState } from "react";
 import Modal from "./components/Modal/Modal.js";
-
-const app = new Clarifai.App({
-	apiKey: "e94b1660d9324eed85b54a57006a82ef",
-});
+import ParticlesBg from "particles-bg";
 
 class App extends Component {
 	// create the state inside the parent application
 	constructor() {
 		super();
 		this.state = {
-			input: "",
-			imageUrl: "",
-			box: {},
 			route: "signin",
 			isSignedIn: false,
 			robots: [],
 			searchfield: "",
 			openModal: false,
 			modalKind: "",
+			user: {
+				id: "",
+				name: "",
+				email: "",
+				joined: "",
+			},
 		};
 	}
+
+	loadUser = (data) => {
+		this.setState({
+			user: {
+				id: data.id,
+				name: data.name,
+				email: data.email,
+				joined: data.joined,
+			},
+		});
+	};
 
 	resetState = () => {
 		this.setState({
@@ -66,22 +72,6 @@ class App extends Component {
 		this.setState({ searchfield: event.target.value });
 	};
 
-	// function below will affect the state of the input
-	onInputChange = (event) => {
-		console.log(event.target.value);
-		this.setState({ input: event.target.value });
-		console.log(this.state.input);
-	};
-
-	//create function to detect the button click
-	onButtonSubmit = () => {
-		this.setState({ imageUrl: this.state.input });
-		app.models
-			.predict("53e1df302c079b3db8a0a36033ed2d15", this.state.input)
-			.then((response) => console.log(response))
-			.catch((err) => console.log(err));
-	};
-
 	onOpenModal = (event, modalKind) => {
 		this.setState({ openModal: event });
 		this.setState({ modalKind: modalKind });
@@ -94,6 +84,20 @@ class App extends Component {
 		});
 		return (
 			<div className="App">
+				<ParticlesBg
+					className="particles"
+					bg={true}
+					type="cobweb"
+					num={50}
+					color="#1E9C17"
+				/>
+				<ParticlesBg
+					className="particles"
+					bg={true}
+					type="cobweb"
+					num={50}
+					color="#D9A714"
+				/>
 				<Navigation
 					isSignedIn={this.state.isSignedIn}
 					onRouteChange={this.onRouteChange}
@@ -126,20 +130,14 @@ class App extends Component {
 								</Scroll>
 							)}
 						</div>
-
-						{/* <Rank /> */}
-						{/* onInputChange function will be used to call back to the function in the class when it is used inside the ImageLinkForm component */}
-						{/* onButtonSubmit passes the function to the ImageLinkForm.js that will be triggered in the App.js when it is triggered in the ImageLinkForm.js */}
-						{/* <ImageLinkForm
-							onInputChange={this.onInputChange}
-							onButtonSubmit={this.onButtonSubmit}
-						/>
-						<FaceRecognition imageUrl={this.state.imageUrl} /> */}
 					</div>
 				) : this.state.route === "signin" ? (
-					<SignIn onRouteChange={this.onRouteChange} />
+					<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
 				) : (
-					<Register onRouteChange={this.onRouteChange} />
+					<Register
+						onRouteChange={this.onRouteChange}
+						loadUser={this.loadUser}
+					/>
 				)}
 			</div>
 		);

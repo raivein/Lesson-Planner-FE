@@ -4,4 +4,6 @@ article {
   left: 50vw;
   right: 50vw;
   transform: translate(-50%, -50%);
-}
+  background: rgba(31, 206, 54, 0.349);
+    box-shadow: 4px 4px 8px 0 rgb(8, 193, 218)
+  }

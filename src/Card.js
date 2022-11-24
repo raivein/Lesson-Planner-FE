@@ -1,7 +1,6 @@
 import React from "react";
 import "./Card.css";
 import cpe_029 from "./CPE_029.png";
-import { useState }from "react";
 // path to picture cannot be outsode of src?
 
 const Card = ({ name, email, id }) => {
