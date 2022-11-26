@@ -17,6 +17,7 @@ function Modal({ OpenModal, modalKind }) {
 	const [mod, setMod] = useState("");
 	const [lab, setLab] = useState("");
 	const [lec, setLec] = useState("");
+	const [startDate, setStartDate] = useState(new Date());
 
 	return (
 		<div className="modalBackground">
@@ -51,7 +52,7 @@ function Modal({ OpenModal, modalKind }) {
 						</select>
 						<p>Grading Semester</p>
 						<select
-							onChange={(e) => setSem(e.target.value)}
+							onChange={(e) => setSem(e)}
 							dafaultValue={sem}>
 							{gradingSem.map((sem, idx) => (
 								<option key={idx}>{sem}</option>
@@ -82,7 +83,11 @@ function Modal({ OpenModal, modalKind }) {
 							))}
 						</select>
 						<p>Start Date</p>
-						<p>....</p>
+						<input
+							type="date"
+							value={startDate}
+							onChange={(e) => setStartDate(e.target.value)}
+						/>
 					</div>
 					<br />
 					<div className="footer">
