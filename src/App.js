@@ -49,7 +49,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		fetch("http://localhost:5050/")
+		fetch("http://localhost:5050/courses")
 			.then((response) => {
 				return response.json();
 			})
@@ -80,7 +80,7 @@ class App extends Component {
 	render() {
 		const { robots, searchfield } = this.state;
 		const filteredRobots = robots.filter((robot) => {
-			return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+			return robot.course.toLowerCase().includes(searchfield.toLowerCase());
 		});
 		return (
 			<div className="App">

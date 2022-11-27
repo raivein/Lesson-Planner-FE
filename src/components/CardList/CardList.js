@@ -12,7 +12,7 @@ const CardList = ({ robots }) => {
 					<Card
 						key={user.id}
 						id={user.id}
-						name={user.name}
+						name={user.course}
 						email={user.email}
 					/>
 				);
