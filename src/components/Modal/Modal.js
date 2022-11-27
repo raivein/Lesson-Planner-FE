@@ -89,15 +89,19 @@ function Modal({ OpenModal, modalKind }) {
   const [lec, setLec] = useState("");
   const [startDate, setStartDate] = useState(new Date());
 
+  function onCreateCourse() {
+    alert("Course Created; click OK to continue");
+  };
+
   return (
     <div className="modalBackground">
       {modalKind === "create" ? (
         <div className="modalContainer">
           <div className="titleCloseBtn">
-            <div style={{flexGrow: 1}}></div>
-            <h1 style={{flexGrow: 2}}>Create a Lesson Planner</h1>
+            <div style={{ flexGrow: 1 }}></div>
+            <h1 style={{ flexGrow: 2 }}>Create a Lesson Planner</h1>
             <button
-              style={{flexGrow: 1}}
+              style={{ flexGrow: 1 }}
               onClick={() => OpenModal(false)}
               className="red grow modalCreateBtn"
             >
@@ -185,7 +189,14 @@ function Modal({ OpenModal, modalKind }) {
             >
               Cancel
             </button>
-            <button className="grow pointer">Create</button>
+            <button className="grow pointer" 
+            onClick={() => {
+              onCreateCourse();
+              OpenModal(false);
+            }}
+            >
+              Create
+            </button>
           </div>
         </div>
       ) : (
