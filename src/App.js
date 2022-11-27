@@ -49,7 +49,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		fetch("http://localhost:5050/courses")
+		fetch("http://localhost:6060/courses")
 			.then((response) => {
 				return response.json();
 			})
