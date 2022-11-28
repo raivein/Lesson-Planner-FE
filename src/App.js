@@ -12,136 +12,144 @@ import Modal from "./components/Modal/Modal.js";
 import ParticlesBg from "particles-bg";
 
 class App extends Component {
-	// create the state inside the parent application
-	constructor() {
-		super();
-		this.state = {
-			route: "signin",
-			isSignedIn: false,
-			robots: [],
-			searchfield: "",
-			openModal: false,
-			modalKind: "",
-			user: {
-				id: "",
-				name: "",
-				email: "",
-				joined: "",
-			}
-		};
-	}
+  // create the state inside the parent application
+  constructor() {
+    super();
+    this.state = {
+      route: "signin",
+      isSignedIn: false,
+      robots: [],
+      searchfield: "",
+      openModal: false,
+      modalKind: "",
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        joined: "",
+      },
+    };
+  }
 
-	loadUser = (data) => {
-		this.setState({
-			user: {
-				id: data.id,
-				name: data.name,
-				email: data.email,
-				joined: data.joined,
-			},
-		});
-	};
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        joined: data.joined,
+      },
+    });
+  };
 
-	resetState = () => {
-		this.setState({
-			openModal: false,
-		});
-	};
+  resetState = () => {
+    this.setState({
+      openModal: false,
+    });
+    Object.assign(this.state.user, {
+      id: "",
+      name: "",
+      email: "",
+      joined: "",
+    });
+    this.setState({ robots: [] });
+  };
 
-	componentDidMount() {
-		fetch("http://localhost:6060/courses")
-			.then((response) => {
-				return response.json();
-			})
-			.then((users) => {
-				this.setState({ robots: users });
-			});
-	}
+  componentDidUpdate() {
+    fetch(`http://localhost:6060/courses/${this.state.user.email}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((users) => {
+        this.setState({ robots: users });
+      });
+  }
 
-	onRouteChange = (route) => {
-		if (route === "signin") {
-			this.setState({ isSignedIn: false });
-			this.resetState();
-		} else if (route === "home") {
-			this.setState({ isSignedIn: true });
-		}
-		this.setState({ route: route });
-	};
+  onRouteChange = (route) => {
+    if (route === "signin") {
+      this.setState({ isSignedIn: false });
+      this.resetState();
+    } else if (route === "home") {
+      this.setState({ isSignedIn: true });
+    }
+    this.setState({ route: route });
+  };
 
-	onSearchChange = (event) => {
-		this.setState({ searchfield: event.target.value });
-	};
+  onSearchChange = (event) => {
+    this.setState({ searchfield: event.target.value });
+  };
 
-	onOpenModal = (event, modalKind) => {
-		this.setState({ openModal: event });
-		this.setState({ modalKind: modalKind });
-	};
+  onOpenModal = (event, modalKind) => {
+    this.setState({ openModal: event });
+    this.setState({ modalKind: modalKind });
+  };
 
-	render() {
-		const { robots, searchfield } = this.state;
-		const filteredRobots = robots.filter((robot) => {
-			return robot.course.toLowerCase().includes(searchfield.toLowerCase());
-		});
-		return (
-			<div className="App">
-				<ParticlesBg
-					className="particles"
-					bg={true}
-					type="cobweb"
-					num={50}
-					color="#1E9C17"
-				/>
-				<ParticlesBg
-					className="particles"
-					bg={true}
-					type="cobweb"
-					num={50}
-					color="#D9A714"
-				/>
-				<Navigation
-					isSignedIn={this.state.isSignedIn}
-					onRouteChange={this.onRouteChange}
-					resetState={this.resetState}
-				/>
-				{this.state.openModal ? (
-					<Modal
-						OpenModal={this.onOpenModal}
-						modalKind={this.state.modalKind}
-					/>
-				) : this.state.route === "home" ? (
-					<div>
-						<Logo />
-						<div>
-							<SearchBox
-								SearchChange={this.onSearchChange}
-								OpenModal={this.onOpenModal}
-							/>
-							<br />
-							<hr className="b--green" />
-							<br />
-							{!robots.length ? (
-								<h1>Loading...</h1>
-							) : (
-								<Scroll>
-									{/* created an ErrorBoundry for CardList component */}
-									<ErrorBoundry>
-										<CardList robots={filteredRobots} />
-									</ErrorBoundry>
-								</Scroll>
-							)}
-						</div>
-					</div>
-				) : this.state.route === "signin" ? (
-					<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
-				) : (
-					<Register
-						onRouteChange={this.onRouteChange}
-						loadUser={this.loadUser}
-					/>
-				)}
-			</div>
-		);
-	}
+  render() {
+    const { robots, searchfield } = this.state;
+    const filteredRobots = robots.filter((robot) => {
+      return robot.course.toLowerCase().includes(searchfield.toLowerCase());
+    });
+    return (
+      <div className="App">
+        <ParticlesBg
+          className="particles"
+          bg={true}
+          type="cobweb"
+          num={50}
+          color="#1E9C17"
+        />
+        <ParticlesBg
+          className="particles"
+          bg={true}
+          type="cobweb"
+          num={50}
+          color="#D9A714"
+        />
+        <Navigation
+          isSignedIn={this.state.isSignedIn}
+          onRouteChange={this.onRouteChange}
+          resetState={this.resetState}
+        />
+        {this.state.openModal ? (
+          <Modal
+            userEmail={this.state.user.email}
+            OpenModal={this.onOpenModal}
+            modalKind={this.state.modalKind}
+          />
+        ) : this.state.route === "home" ? (
+          <div>
+            <Logo />
+            <div>
+              <SearchBox
+                SearchChange={this.onSearchChange}
+                OpenModal={this.onOpenModal}
+              />
+              <br />
+              <hr className="b--green" />
+              <br />
+              {!robots.length ? (
+                <h1>You don't have any courses...</h1>
+              ) : (
+                <Scroll>
+                  {/* created an ErrorBoundry for CardList component */}
+                  <ErrorBoundry>
+                    <CardList robots={filteredRobots} />
+                  </ErrorBoundry>
+                </Scroll>
+              )}
+            </div>
+          </div>
+        ) : this.state.route === "signin" ? (
+          <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+        ) : (
+          <Register
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+          />
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;

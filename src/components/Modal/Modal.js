@@ -3,7 +3,7 @@ import "./Modal.css";
 import { useState } from "react";
 import "tachyons";
 
-function Modal({ OpenModal, modalKind }) {
+function Modal({ OpenModal, modalKind, userEmail }) {
   const gradingSem = ["1st", "2nd"];
   const gradingYear = ["1st", "2nd", "3rd", "4th"];
   const course = [
@@ -87,11 +87,33 @@ function Modal({ OpenModal, modalKind }) {
   const [mod, setMod] = useState("");
   const [lab, setLab] = useState("");
   const [lec, setLec] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState("");
 
   function onCreateCourse() {
-    alert("Course Created; click OK to continue");
-  };
+    fetch("http://localhost:6060/createlesson", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sem: sem,
+        year: year,
+        courseName: courseName,
+        mod: mod,
+        lab: lab,
+        lec: lec,
+        startDate: startDate,
+        email: userEmail, //email is from the parent component
+      }),
+    })
+      .then((response) => response.json())
+      .then((course) => {
+        if (course.id) {
+          alert("Course Created; click OK to continue");
+          OpenModal(false);
+        } else {
+          alert("Error: Course not created; Make sure all fields are filled");
+        }
+      });
+  }
 
   return (
     <div className="modalBackground">
@@ -135,7 +157,7 @@ function Modal({ OpenModal, modalKind }) {
               ))}
             </select>
             <p>Grading Semester</p>
-            <select onChange={(e) => setSem(e)} dafaultValue={sem}>
+            <select onChange={(e) => setSem(e.target.value)} dafaultValue={sem}>
               <option value="" disabled selected>
                 Choose a semester
               </option>
@@ -189,11 +211,11 @@ function Modal({ OpenModal, modalKind }) {
             >
               Cancel
             </button>
-            <button className="grow pointer" 
-            onClick={() => {
-              onCreateCourse();
-              OpenModal(false);
-            }}
+            <button
+              className="grow pointer"
+              onClick={() => {
+                onCreateCourse();
+              }}
             >
               Create
             </button>
