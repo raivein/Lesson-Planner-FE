@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const SearchBox = ({ SearchChange, OpenModal }) => {
+  const [deleteCourse, setDeleteCourse] = useState(false);
 
-	const [deleteCourse, setDeleteCourse] = useState(false);
-
-	return (
+  return (
     <div className="mw9 center ph3-ns">
       <button
         className="w-10 grow f4 link pv2 dib white bg-light-purple left pointer"
@@ -19,17 +18,23 @@ const SearchBox = ({ SearchChange, OpenModal }) => {
         onChange={SearchChange}
       />
       <button
-        className="w-10 grow f4 link pv2 dib white bg-light-red pointer mr3"
+        className={
+          deleteCourse
+            ? "w-10 grow f4 link pv2 dib white bg-gray pointer mr3"
+            : "w-10 grow f4 link pv2 dib white bg-light-red pointer mr3"
+        }
         onClick={() => setDeleteCourse(!deleteCourse)}
       >
-        Delete
+        {deleteCourse ? "Cancel" : "Delete"}
       </button>
-      <button
-        className="w-10 grow f4 link pv2 dib white bg-red pointer"
-        onClick={() => OpenModal(true, "delete")}
-      >
-        confirm
-      </button>
+      {deleteCourse && (
+        <button
+          className="w-10 grow f4 link pv2 dib white bg-red pointer"
+          onClick={() => OpenModal(true, "delete")}
+        >
+          confirm
+        </button>
+      )}
     </div>
   );
 };
