@@ -19,6 +19,7 @@ class App extends Component {
       route: "signin",
       isSignedIn: false,
       robots: [],
+      courses: [],
       searchfield: "",
       openModal: false,
       modalKind: "",
@@ -65,6 +66,16 @@ class App extends Component {
       });
   }
 
+  componentDidMount() {
+    fetch("http://localhost:6060/modal/courses")
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        this.setState({ courses: response });
+      });
+  }
+
   onRouteChange = (route) => {
     if (route === "signin") {
       this.setState({ isSignedIn: false });
@@ -85,7 +96,7 @@ class App extends Component {
   };
 
   render() {
-    const { robots, searchfield } = this.state;
+    const { robots, searchfield, courses } = this.state;
     const filteredRobots = robots.filter((robot) => {
       return robot.course.toLowerCase().includes(searchfield.toLowerCase());
     });
@@ -112,6 +123,7 @@ class App extends Component {
         />
         {this.state.openModal ? (
           <Modal
+            courses = {courses}
             userEmail={this.state.user.email}
             OpenModal={this.onOpenModal}
             modalKind={this.state.modalKind}
