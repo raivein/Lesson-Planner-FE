@@ -43,6 +43,26 @@ class App extends Component {
     });
   };
 
+  //dev mode only to bypas signin
+  autoSignIn = () => {
+    fetch("http://localhost:6060/signin", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: "qjeabinay@tip.edu.ph",
+        password: "123",
+      }),
+    })
+      .then((response) => response.json())
+      .then((user) => {
+        if (user.id) {
+          this.loadUser(user);
+          this.onRouteChange("home");
+        }
+      });
+  };
+  //dev mode only to bypas signin
+
   resetState = () => {
     this.setState({
       openModal: false,
@@ -73,6 +93,7 @@ class App extends Component {
       })
       .then((response) => {
         this.setState({ courses: response });
+        this.autoSignIn(); //dev mode only to bypas signin
       });
   }
 
@@ -123,7 +144,7 @@ class App extends Component {
         />
         {this.state.openModal ? (
           <Modal
-            courses = {courses}
+            courses={courses}
             userEmail={this.state.user.email}
             OpenModal={this.onOpenModal}
             modalKind={this.state.modalKind}
