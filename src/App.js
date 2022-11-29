@@ -114,6 +114,7 @@ class App extends Component {
   onOpenModal = (event, modalKind) => {
     this.setState({ openModal: event });
     this.setState({ modalKind: modalKind });
+    this.setState({ searchfield: "" });
   };
 
   render() {

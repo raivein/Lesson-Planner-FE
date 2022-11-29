@@ -172,10 +172,14 @@ function Modal({ OpenModal, modalKind, userEmail, courses }) {
             <p>Are you sure you want to Delete it?</p>
           </div>
           <div className="footer">
-            <button onClick={() => OpenModal(false)} id="cancelBtn">
+            <button
+              className="grow pointer"
+              onClick={() => OpenModal(false)}
+              id="cancelBtn"
+            >
               Cancel
             </button>
-            <button>Continue</button>
+            <button className="grow pointer">Continue</button>
           </div>
         </div>
       )}
