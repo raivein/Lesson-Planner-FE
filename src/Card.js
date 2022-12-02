@@ -1,32 +1,35 @@
 import React from "react";
 import "./Card.css";
 import cpe_029 from "./CPE_029.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "tachyons";
 // path to picture cannot be outsode of src?
 
-const Card = ({ name, email, id, deleteMode }) => {
+const Card = ({ name, email, id, deleteMode, ClickedCourses }) => {
   // const { name, email, id } = props;
   const [clicked, setClicked] = useState(false);
-  const [clcikedCourses, setClickedCourses] = useState([]);
+  // const [clcikedCourses, setClickedCourses] = useState([]);
 
-  const onClicked = (id) => {
-    if (deleteMode) {
-      setClicked(!clicked);
-      if (clcikedCourses.includes(id)) {
-        setClickedCourses(clcikedCourses.filter((course) => course !== id));
-      } else {
-        setClickedCourses([...clcikedCourses, id]);
-      }
-    }
-    console.log(clcikedCourses);
-  };
+  function onClicked(id) {
+    setClicked(!clicked);
+    ClickedCourses(id);
+  }
+
+  useEffect(() => {
+    console.log(clicked, id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clicked]);
 
   return (
     <div
       {...(deleteMode ? { onClick: () => onClicked(id) } : {})}
-      className="pointer tc bg-light-green dib br3 ma2 bw2 shadow-5 dim"
-      {...(clicked && deleteMode ? { style: { border: "5px solid red" } } : {})}
+      // className="pointer tc bg-light-green dib ma2 shadow-5 dim"
+      // {...(clicked && deleteMode ? { style: { border: "5px solid red" } } : {})}
+      className={
+        clicked && deleteMode
+          ? "pointer tc bg-light-green dib ma2 shadow-5 dim ba bw2 b--dark-red"
+          : "pointer tc bg-light-green dib ma2 shadow-5 dim"
+      }
     >
       {/* css to add for when clicked: b--dark-red br2 dim-on-click */}
       <img

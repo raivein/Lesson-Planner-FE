@@ -1,7 +1,16 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const SearchBox = ({ SearchChange, OpenModal, Delete }) => {
   const [deleteCourse, setDeleteCourse] = useState(false);
+
+  const onDelete = () => {
+    setDeleteCourse(!deleteCourse);
+  };
+
+  useEffect(() => {
+    Delete(deleteCourse);
+  }, [deleteCourse]);
 
   return (
     <div className="mw9 center ph3-ns">
@@ -23,10 +32,7 @@ const SearchBox = ({ SearchChange, OpenModal, Delete }) => {
             ? "w-10 grow f4 link pv2 dib white bg-gray pointer mr3"
             : "w-10 grow f4 link pv2 dib white bg-light-red pointer mr3"
         }
-        onClick={() => {
-          setDeleteCourse(!deleteCourse);
-          Delete(!deleteCourse);
-        }}
+        onClick={onDelete}
       >
         {deleteCourse ? "Cancel" : "Delete"}
       </button>
