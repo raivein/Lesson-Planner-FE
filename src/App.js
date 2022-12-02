@@ -23,6 +23,7 @@ class App extends Component {
       searchfield: "",
       openModal: false,
       modalKind: "",
+      delete: false,
       user: {
         id: "",
         name: "",
@@ -117,6 +118,12 @@ class App extends Component {
     this.setState({ searchfield: "" });
   };
 
+  onDelete = (event) => {
+    this.setState({ delete: event }, () => {
+      console.log(this.state.delete);
+    });
+  };
+
   render() {
     const { robots, searchfield, courses } = this.state;
     const filteredRobots = robots.filter((robot) => {
@@ -155,6 +162,7 @@ class App extends Component {
             <Logo />
             <div>
               <SearchBox
+                Delete={this.onDelete}
                 SearchChange={this.onSearchChange}
                 OpenModal={this.onOpenModal}
               />
@@ -167,7 +175,10 @@ class App extends Component {
                 <Scroll>
                   {/* created an ErrorBoundry for CardList component */}
                   <ErrorBoundry>
-                    <CardList robots={filteredRobots} />
+                    <CardList
+                      robots={filteredRobots}
+                      deleteMode={this.state.delete}
+                    />
                   </ErrorBoundry>
                 </Scroll>
               )}

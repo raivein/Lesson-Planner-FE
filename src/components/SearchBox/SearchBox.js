@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchBox = ({ SearchChange, OpenModal }) => {
+const SearchBox = ({ SearchChange, OpenModal, Delete }) => {
   const [deleteCourse, setDeleteCourse] = useState(false);
 
   return (
@@ -23,7 +23,10 @@ const SearchBox = ({ SearchChange, OpenModal }) => {
             ? "w-10 grow f4 link pv2 dib white bg-gray pointer mr3"
             : "w-10 grow f4 link pv2 dib white bg-light-red pointer mr3"
         }
-        onClick={() => setDeleteCourse(!deleteCourse)}
+        onClick={() => {
+          setDeleteCourse(!deleteCourse);
+          Delete(!deleteCourse);
+        }}
       >
         {deleteCourse ? "Cancel" : "Delete"}
       </button>
