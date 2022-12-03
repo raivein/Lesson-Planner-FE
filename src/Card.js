@@ -20,6 +20,8 @@ const Card = ({ name, email, id, deleteMode, ClickedCourses }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked]);
 
+  
+
   return (
     <div
       {...(deleteMode ? { onClick: () => onClicked(id) } : {})}

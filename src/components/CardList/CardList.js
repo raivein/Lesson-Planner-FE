@@ -20,7 +20,7 @@ const CardList = ({ robots, deleteMode }) => {
   const [clickedCourses, setClickedCourses] = useState([]);
 
   function onClickedCourses(id) {
-    if (id.length !== 0) {
+    if (id.length !== 0 && deleteMode) {
       id = parseInt(id);
       if (deleteMode) {
         if (clickedCourses.includes(id)) {
@@ -33,8 +33,13 @@ const CardList = ({ robots, deleteMode }) => {
   }
 
   useEffect(() => {
-    console.log(clickedCourses);
+    console.log("clicked courses:",clickedCourses);
   }, [clickedCourses]);
+
+  useEffect(() => {
+    console.log("deleteMode", deleteMode);
+    setClickedCourses([]);
+  }, [deleteMode]);
 
   return (
     <div className="dtc">
