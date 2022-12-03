@@ -16,22 +16,25 @@ const Card = ({ name, email, id, deleteMode, ClickedCourses }) => {
   }
 
   useEffect(() => {
-    console.log(clicked, id);
+    console.log("button clicked? ",clicked, id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked]);
 
-  
+    useEffect(() => {
+      console.log("class deleteMode", deleteMode);
+      setClicked(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [deleteMode]);
+
+
 
   return (
     <div
       {...(deleteMode ? { onClick: () => onClicked(id) } : {})}
       // className="pointer tc bg-light-green dib ma2 shadow-5 dim"
       // {...(clicked && deleteMode ? { style: { border: "5px solid red" } } : {})}
-      className={
-        clicked && deleteMode
-          ? "pointer tc bg-light-green dib ma2 shadow-5 dim ba bw2 b--dark-red"
-          : "pointer tc bg-light-green dib ma2 shadow-5 dim"
-      }
+      className="pointer tc bg-light-green dib ma2 shadow-5 dim"
+      {...(deleteMode ? clicked ? { style: { border: "5px solid red" } } : {} : {})}
     >
       {/* css to add for when clicked: b--dark-red br2 dim-on-click */}
       <img
