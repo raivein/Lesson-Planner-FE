@@ -3,7 +3,7 @@ import "./Modal.css";
 import { useState } from "react";
 import "tachyons";
 
-function Modal({ OpenModal, modalKind, userEmail, courses }) {
+function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete }) {
   const gradingSem = ["1st", "2nd"];
   const gradingYear = ["1st", "2nd", "3rd", "4th"];
 
@@ -24,6 +24,26 @@ function Modal({ OpenModal, modalKind, userEmail, courses }) {
   const [lab, setLab] = useState("");
   const [lec, setLec] = useState("");
   const [startDate, setStartDate] = useState("");
+
+  function onDeleteCourse() {
+    fetch("http://localhost:6060/deletecourse", {
+      method: "delete",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: userEmail,
+        id: coursesToDelete,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.courses) {
+          alert(`The courses\n\n${data.courses.join("\n")}\n\nare deleted`);
+          OpenModal(false);
+        } else {
+          alert("error: no courses selected!");
+        }
+      });
+  }
 
   function onCreateCourse() {
     fetch("http://localhost:6060/createlesson", {
@@ -179,7 +199,14 @@ function Modal({ OpenModal, modalKind, userEmail, courses }) {
             >
               Cancel
             </button>
-            <button className="grow pointer">Continue</button>
+            <button
+              className="grow pointer"
+              onClick={() => {
+                onDeleteCourse();
+              }}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}

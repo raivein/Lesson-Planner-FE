@@ -159,6 +159,7 @@ class App extends Component {
         />
         {this.state.openModal ? (
           <Modal
+            coursesToDelete={this.state.coursesToDelete}
             courses={courses}
             userEmail={this.state.user.email}
             OpenModal={this.onOpenModal}
