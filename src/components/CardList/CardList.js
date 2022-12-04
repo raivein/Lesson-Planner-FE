@@ -1,21 +1,8 @@
 import Card from "../../Card";
 import "tachyons";
 import React, { useState, useEffect } from "react";
-// import { useState } from "react";
 
-const CardList = ({ robots, deleteMode }) => {
-  // const [clcikedCourses, setClickedCourses] = useState([]);
-
-  // const onClick = (id) => {
-  // 	if (deleteMode) {
-  // 		if (clcikedCourses.includes(id)) {
-  // 			setClickedCourses(clcikedCourses.filter((course) => course !== id));
-  // 		} else {
-  // 			setClickedCourses([...clcikedCourses, id]);
-  // 		}
-  // 	}
-  // 	console.log(clcikedCourses);
-  // };
+const CardList = ({ robots, deleteMode, onCoursesToDelete }) => {
 
   const [clickedCourses, setClickedCourses] = useState([]);
 
@@ -33,7 +20,9 @@ const CardList = ({ robots, deleteMode }) => {
   }
 
   useEffect(() => {
-    console.log("clicked courses:",clickedCourses);
+    console.log("clicked courses:", clickedCourses);
+    onCoursesToDelete(clickedCourses);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickedCourses]);
 
   useEffect(() => {

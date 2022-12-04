@@ -24,6 +24,7 @@ class App extends Component {
       openModal: false,
       modalKind: "",
       delete: false,
+      coursesToDelete: [],
       user: {
         id: "",
         name: "",
@@ -112,6 +113,12 @@ class App extends Component {
     this.setState({ searchfield: event.target.value });
   };
 
+  onCoursesToDelete = (course) => {
+    this.setState({ coursesToDelete: course }, () => {
+      console.log("courses to delete", this.state.coursesToDelete);
+    });
+  };
+
   onOpenModal = (event, modalKind) => {
     this.setState({ openModal: event });
     this.setState({ modalKind: modalKind });
@@ -156,6 +163,7 @@ class App extends Component {
             userEmail={this.state.user.email}
             OpenModal={this.onOpenModal}
             modalKind={this.state.modalKind}
+            onConfirmDelete={this.onConfirmDelete}
           />
         ) : this.state.route === "home" ? (
           <div>
@@ -176,6 +184,7 @@ class App extends Component {
                   {/* created an ErrorBoundry for CardList component */}
                   <ErrorBoundry>
                     <CardList
+                      onCoursesToDelete={this.onCoursesToDelete}
                       robots={filteredRobots}
                       deleteMode={this.state.delete}
                     />

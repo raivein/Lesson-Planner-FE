@@ -14,7 +14,7 @@ function Modal({ OpenModal, modalKind, userEmail, courses }) {
     .flat();
 
   const modularity = ["full", "modular"];
-  const labhrs = ["0","1", "2", "3", "4", "5", "6"];
+  const labhrs = ["0", "1", "2", "3", "4", "5", "6"];
   const lechrs = ["1", "2", "3", "4", "5", "6"];
 
   const [sem, setSem] = useState("");
