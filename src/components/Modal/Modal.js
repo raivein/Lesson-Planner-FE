@@ -3,7 +3,7 @@ import "./Modal.css";
 import { useState } from "react";
 import "tachyons";
 
-function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete }) {
+function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete, getCourses }) {
   const gradingSem = ["1st", "2nd"];
   const gradingYear = ["1st", "2nd", "3rd", "4th"];
 
@@ -38,6 +38,7 @@ function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete }) {
       .then((data) => {
         if (data.courses) {
           alert(`The courses\n\n${data.courses.join("\n")}\n\nare deleted`);
+          getCourses();
           OpenModal(false);
         } else {
           alert("error: no courses selected!");
@@ -64,6 +65,7 @@ function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete }) {
       .then((course) => {
         if (course.id) {
           alert("Course Created; click OK to continue");
+          getCourses();
           OpenModal(false);
         } else {
           alert("Error: Course not created; Make sure all fields are filled");

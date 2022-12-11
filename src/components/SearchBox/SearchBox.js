@@ -10,6 +10,7 @@ const SearchBox = ({ SearchChange, OpenModal, Delete }) => {
 
   useEffect(() => {
     Delete(deleteCourse);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteCourse]);
 
   return (
