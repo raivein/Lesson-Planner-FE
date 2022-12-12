@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignIn.css";
 import { TextField } from "@mui/material";
-
+import profLanner from "../Logo/logo_transparent_.png";
 class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
@@ -47,11 +47,16 @@ class SignIn extends React.Component {
 	render() {
 		return (
 			<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 shadow-5 center">
-				<main className="pa4 black-80">
+				<main className="pa3 black-80">
+					<img
+						style={{width: "250px", height: "80px", objectFit: "cover"}}
+						src={profLanner}
+						alt="Logo"
+					/>
 					<div className="measure">
 						<fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-							<legend className="f1 fw6 ph0 mh0">Sign In</legend>
-							<hr />
+							<legend className="f2 fw6 ph0 mh0">Sign In</legend>
+              <hr />
 							<div className="mt3">
 								{/* <label className="db fw6 lh-copy f6" for="email-address">
 									Email
@@ -73,8 +78,8 @@ class SignIn extends React.Component {
 									value={this.state.signInEmail}
 									label="Email"
 									variant="standard"
-                  helperText="Enter your email"
-                  fullWidth={true}
+									helperText="Enter your email"
+									fullWidth={true}
 								/>
 							</div>
 							<div className="mv3">
@@ -91,7 +96,7 @@ class SignIn extends React.Component {
 									name="password"
 									id="password"
 								/> */}
-                <TextField
+								<TextField
 									className="pa2 input-reset ba bg-transparent w-120 b--dark-green"
 									onChange={this.onPasswordChange}
 									onKeyDown={this.onEnterPress}
@@ -100,9 +105,9 @@ class SignIn extends React.Component {
 									value={this.state.signInPassword}
 									label="password"
 									type="password"
-                  helperText="Enter your password"
-                  variant="standard"
-                  fullWidth={true}
+									helperText="Enter your password"
+									variant="standard"
+									fullWidth={true}
 								/>
 							</div>
 						</fieldset>
