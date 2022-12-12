@@ -3,15 +3,22 @@ import "./Modal.css";
 import { useState } from "react";
 import "tachyons";
 
-function Modal({ OpenModal, modalKind, userEmail, courses, coursesToDelete, getCourses }) {
+function Modal({
+  OpenModal,
+  modalKind,
+  userEmail,
+  courses,
+  coursesToDelete,
+  getCourses,
+}) {
   const gradingSem = ["1st", "2nd"];
   const gradingYear = ["1st", "2nd", "3rd", "4th"];
 
   const course = courses
     .map((course) => {
-      return Object.values(course);
+      return course.course;
     })
-    .flat();
+    .flat()
 
   const modularity = ["full", "modular"];
   const labhrs = ["0", "1", "2", "3", "4", "5", "6"];

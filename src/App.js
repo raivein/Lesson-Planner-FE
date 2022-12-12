@@ -162,6 +162,10 @@ class App extends Component {
     const filteredRobots = robots.filter((robot) => {
       return robot.course.toLowerCase().includes(searchfield.toLowerCase());
     });
+    const filteredcourses = robots.filter((course) => {
+      return course.id === this.state.coursesToOpen;
+    });
+
     return (
       <div className="App">
         <ParticlesBg
@@ -227,7 +231,10 @@ class App extends Component {
         ) : this.state.route === "signin" ? (
           <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : this.state.route === "planner" ? (
-          <Planner />
+          <Planner
+            filteredcourses={filteredcourses}
+            coursesToOpen={this.state.coursesToOpen}
+          />
         ) : (
           <Register
             onRouteChange={this.onRouteChange}
