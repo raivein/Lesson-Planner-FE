@@ -34,7 +34,13 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData(
+    "Explain the key concepts of the Software Design process and demonstrate how the essential design principles are applied within it",
+    "Explain the key concepts of the Software Design process and demonstrate how the essential design principles are applied within it",
+    "Explain the key concepts of the Software Design process and demonstrate how the essential design principles are applied within it",
+    "Explain the key concepts of the Software Design process and demonstrate how the essential design principles are applied within it",
+    "Explain the key concepts of the Software Design process and demonstrate how the essential design principles are applied within it"
+  ),
   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
   createData("Eclair", 262, 16.0, 24, 6.0),
   createData("Cupcake", 305, 3.7, 67, 4.3),
@@ -44,16 +50,15 @@ const rows = [
 export default function CustomizedTables() {
   return (
     <div className="ma3">
-      <TableContainer
-        component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-              <StyledTableCell align="right">Calories</StyledTableCell>
-              <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+              <StyledTableCell align="left">Calories</StyledTableCell>
+              <StyledTableCell align="left">Fat&nbsp;(g)</StyledTableCell>
+              <StyledTableCell align="left">Carbs&nbsp;(g)</StyledTableCell>
+              <StyledTableCell align="left">Protein&nbsp;(g)</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,10 +67,12 @@ export default function CustomizedTables() {
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                <StyledTableCell align="left"><ul>
+                  <li>{row.calories}</li>
+                </ul></StyledTableCell>
+                <StyledTableCell align="left">{row.fat}</StyledTableCell>
+                <StyledTableCell align="left">{row.carbs}</StyledTableCell>
+                <StyledTableCell align="left">{row.protein}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
