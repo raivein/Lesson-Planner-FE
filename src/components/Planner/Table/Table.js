@@ -7,7 +7,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
 import "tachyons";
+import TableMenu from "./TableMenu/TableMenu.js";
+import "./Table.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,11 +59,66 @@ export default function CustomizedTables() {
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-              <StyledTableCell align="left">Calories</StyledTableCell>
-              <StyledTableCell align="left">Fat&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="left">Carbs&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="left">Protein&nbsp;(g)</StyledTableCell>
+              <StyledTableCell
+                style={{
+                  paddingBottom: "0px",
+                  paddingTop: "0px",
+                }}
+                align="center"
+              >
+                <div className="headerCell">
+                  <p>Topics</p>
+                  <TableMenu />
+                </div>
+              </StyledTableCell>
+              <StyledTableCell
+                style={{
+                  paddingBottom: "0px",
+                  paddingTop: "0px",
+                }}
+                align="center"
+              >
+                <div class="headerCell">
+                  <p>ILOs</p>
+                  <TableMenu />
+                </div>
+              </StyledTableCell>
+              <StyledTableCell
+                style={{
+                  paddingBottom: "0px",
+                  paddingTop: "0px",
+                }}
+                align="center"
+              >
+                <div class="headerCell">
+                  <p>TLAs</p>
+                  <TableMenu />
+                </div>
+              </StyledTableCell>
+              <StyledTableCell
+                style={{
+                  paddingBottom: "0px",
+                  paddingTop: "0px",
+                }}
+                align="center"
+              >
+                <div class="headerCell">
+                  <p>ATs</p>
+                  <TableMenu />
+                </div>
+              </StyledTableCell>
+              <StyledTableCell
+                style={{
+                  paddingBottom: "0px",
+                  paddingTop: "0px",
+                }}
+                align="center"
+              >
+                <div class="headerCell">
+                  <p>Remarks</p>
+                  <TableMenu />
+                </div>
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -67,9 +127,11 @@ export default function CustomizedTables() {
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
-                <StyledTableCell align="left"><ul>
-                  <li>{row.calories}</li>
-                </ul></StyledTableCell>
+                <StyledTableCell align="left">
+                  <ul>
+                    <li>{row.calories}</li>
+                  </ul>
+                </StyledTableCell>
                 <StyledTableCell align="left">{row.fat}</StyledTableCell>
                 <StyledTableCell align="left">{row.carbs}</StyledTableCell>
                 <StyledTableCell align="left">{row.protein}</StyledTableCell>
