@@ -3,7 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import PopoverTableAdd from "./PopoverTableAdd.js";
+import PopoverTableAdd from "./PopoverTableAdd/PopoverTableAdd.js";
 import { useEffect, useState } from "react";
 
 export default function PositionedMenu() {
@@ -67,8 +67,7 @@ export default function PositionedMenu() {
           }}
           onClose={handleClose}
         >
-          <TextFieldsIcon color="secondary" />{" "}
-          <PopoverTableAdd text={"text"} />
+          <TextFieldsIcon color="secondary" /> <PopoverTableAdd text={"text"} />
         </MenuItem>
         <MenuItem
           onClick={(ev) => {

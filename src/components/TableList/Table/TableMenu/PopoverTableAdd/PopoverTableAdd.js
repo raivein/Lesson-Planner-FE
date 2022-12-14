@@ -1,7 +1,7 @@
 import * as React from "react";
 import Popover from "@mui/material/Popover";
 import { useState } from "react";
-import TableAdd from "./TableAdd.js";
+import TableAdd from "./TableAdd/TableAdd.js";
 
 export default function BasicPopover({ text }) {
   const [anchorEl, setAnchorEl] = React.useState(null);

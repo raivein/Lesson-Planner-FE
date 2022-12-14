@@ -9,8 +9,10 @@ import SearchBox from "./components/SearchBox/SearchBox.js";
 import Scroll from "./components/Scroll/Scroll.js";
 import ErrorBoundry from "./components/ErrorBoundry/ErrorBoundry.js";
 import Modal from "./components/Modal/Modal.js";
-import Planner from "./components/Planner/Planner.js";
+import TableList from "./components/TableList/TableList.js";
 import ParticlesBg from "particles-bg";
+import MetaData from "./compoents/MetaData/MetaData.js";
+
 
 class App extends Component {
   // create the state inside the parent application
@@ -231,10 +233,15 @@ class App extends Component {
         ) : this.state.route === "signin" ? (
           <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : this.state.route === "planner" ? (
-          <Planner
-            filteredcourses={filteredcourses}
-            coursesToOpen={this.state.coursesToOpen}
-          />
+          <>
+            <MetaData           
+                filteredcourses={filteredcourses}/>
+            {/* <Scroll> */}
+              <TableList
+                filteredcourses={filteredcourses}
+                coursesToOpen={this.state.coursesToOpen} />
+            {/* </Scroll> */}
+          </>
         ) : (
           <Register
             onRouteChange={this.onRouteChange}
