@@ -91,7 +91,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>TLAs</p>
-                  <TableMenu />
+                  <TableMenu id = {"tlas"} />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -103,7 +103,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>ATs</p>
-                  <TableMenu />
+                  <TableMenu id = "ats" />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -115,7 +115,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>Remarks</p>
-                  <TableMenu />
+                  <TableMenu id = "remarks" />
                 </div>
               </StyledTableCell>
             </TableRow>
