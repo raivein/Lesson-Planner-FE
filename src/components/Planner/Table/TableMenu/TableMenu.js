@@ -1,19 +1,38 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PopoverTableAdd from "./PopoverTableAdd.js";
+import { useEffect, useState } from "react";
 
 export default function PositionedMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const onTypeofInput = (type) => {
+    setAnchorEl2(type);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // function onPopOverState() {
+  //   handleClose();
+  // };
+
+  useEffect(() => {
+    console.log("anchorEl", anchorEl);
+  }, [anchorEl]);
+
+  useEffect(() => {
+    console.log("anchorEl", anchorEl2);
+  }, [anchorEl2]);
 
   return (
     <div style={{ height: "auto", width: "auto" }}>
@@ -23,7 +42,7 @@ export default function PositionedMenu() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        className = "pa0"
+        className="pa0"
       >
         <h1 style={{ margin: "0", padding: "0" }}>+</h1>
       </Button>
@@ -42,11 +61,23 @@ export default function PositionedMenu() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <TextFieldsIcon color="secondary" /> {" | Text"}
+        <MenuItem
+          onClick={(ev) => {
+            onTypeofInput("text");
+          }}
+          onClose={handleClose}
+        >
+          <TextFieldsIcon color="secondary" />{" "}
+          <PopoverTableAdd text={"text"} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <FormatListBulletedIcon color="primary" /> {" | List"}
+        <MenuItem
+          onClick={(ev) => {
+            onTypeofInput("list");
+          }}
+          onClose={handleClose}
+        >
+          <FormatListBulletedIcon color="primary" />{" "}
+          <PopoverTableAdd text={"list"} />
         </MenuItem>
       </Menu>
     </div>
