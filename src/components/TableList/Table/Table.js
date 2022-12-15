@@ -144,6 +144,12 @@ export default function CustomizedTables({
     }
   }, [RemarksArr]);
 
+  //------------------
+  function getText(ctrl) {
+    console.log(ctrl);
+  }
+  //------------------
+
   return (
     <div className="ma3">
       <h1 style={{ display: "flex", alignItems: "end", marginBottom: "2px" }}>
@@ -239,7 +245,13 @@ export default function CustomizedTables({
             >
               <ul>
                 {topicsArr.map((topic) => {
-                  return <li>{topic}</li>;
+                  return <li>{topic}{" "}<button onClick={()=>{
+                    const index = topicsArr.indexOf(topic);
+                    if (index > -1) {
+                      topicsArr.splice(index, 1);
+                    }
+                    setTopicsArr([...topicsArr])
+                  }}>x</button></li>;
                 })}
               </ul>
             </StyledTableCell>
