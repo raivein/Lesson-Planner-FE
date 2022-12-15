@@ -50,30 +50,31 @@ class App extends Component {
         },
       },
       () => {
-        console.log(this.state.user); // dev mode only
+        // console.log(this.state.user); // dev mode only
+        this.onCourseCodes();
         this.onGetCourses();
       }
     );
   };
 
   //dev mode only to bypas signin
-  autoSignIn = () => {
-    fetch("http://localhost:6060/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: "qjeabinay@tip.edu.ph",
-        password: "123",
-      }),
-    })
-      .then((response) => response.json())
-      .then((user) => {
-        if (user.id) {
-          this.loadUser(user);
-          this.onRouteChange("home");
-        }
-      });
-  };
+  // autoSignIn = () => {
+  //   fetch("http://localhost:6060/signin", {
+  //     method: "post",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       email: "qjeabinay@tip.edu.ph",
+  //       password: "123",
+  //     }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((user) => {
+  //       if (user.id) {
+  //         this.loadUser(user);
+  //         this.onRouteChange("home");
+  //       }
+  //     });
+  // };
   //dev mode only to bypas signin
 
   resetState = () => {
@@ -107,14 +108,14 @@ class App extends Component {
       });
   };
 
-  componentDidMount() {
+  onCourseCodes() {
     fetch("http://localhost:6060/modal/courses")
       .then((response) => {
         return response.json();
       })
       .then((response) => {
         this.setState({ courses: response });
-        this.autoSignIn(); //!dev mode only to bypas signin
+        // this.autoSignIn(); //!dev mode only to bypas signin
       });
   }
 
