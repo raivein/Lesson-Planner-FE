@@ -238,7 +238,7 @@ class App extends Component {
                 filteredcourses={filteredcourses}/>
             {/* <Scroll> */}
               <TableList
-                filteredcourses={filteredcourses}
+                // filteredcourses={filteredcourses}
                 coursesToOpen={this.state.coursesToOpen} />
             {/* </Scroll> */}
           </>

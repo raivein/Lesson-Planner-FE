@@ -13,9 +13,8 @@ import Typography from "@mui/material/Typography";
 import "tachyons";
 import TableMenu from "./TableMenu/TableMenu.js";
 import "./Table.css";
-import { useState } from 'react';
-import "./Table.css"
-
+import { useState, useEffect } from "react";
+import "./Table.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,42 +37,119 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 // ----------- examples pre-states-------------------------------------------------
-const topics = ["topic 1", "topic 2", "topic 3", "topic 4", "topic 5"];
-const ILOs = ["ILO 3", "ILO 4", "ILO 5"];
-const TLAs = ["TLA 1", "TLA 2", "TLA 4", "TLA 5"];
-const ATs = ["AT 1", "AT 2", "AT 3", "AT 4", "AT 5"];
-const Remarks = ["Remarks 1", "Remarks 2", "Remarks 3"];
-const rows = [topics, ILOs, TLAs, ATs, Remarks];
-// ----------- examples pre-states-------------------------------------------------
+// const topics = ["topic 1", "topic 2", "topic 3", "topic 4", "topic 5"];
+// const ILOs = ["ILO 3", "ILO 4", "ILO 5"];
+// const TLAs = ["TLA 1", "TLA 2", "TLA 4", "TLA 5"];
+// const ATs = ["AT 1", "AT 2", "AT 3", "AT 4", "AT 5"];
+// const Remarks = ["Remarks 1", "Remarks 2", "Remarks 3"];
+// const rows = [topics, ILOs, TLAs, ATs, Remarks];
+// // ----------- examples pre-states-------------------------------------------------
 
-export default function CustomizedTables() {
+export default function CustomizedTables({
+  KEY,
+  ID,
+  weeks,
+  ilos,
+  tlas,
+  ats,
+  topics,
+  remarks,
+}) {
   const [topicsArr, setTopicsArr] = useState(topics);
-  const [ILOsArr, setILOsArr] = useState(ILOs);
-  const [TLAsArr, setTLAsArr] = useState(TLAs);
-  const [ATsArr, setATsArr] = useState(ATs);
-  const [RemarksArr, setRemarksArr] = useState(Remarks);
+  const [ILOsArr, setILOsArr] = useState(ilos);
+  const [TLAsArr, setTLAsArr] = useState(tlas);
+  const [ATsArr, setATsArr] = useState(ats);
+  const [RemarksArr, setRemarksArr] = useState(remarks);
+  const [inputAndId, setInputAndId] = useState([]);
+
+  function onUpdate(input, id, weeks) {
+    fetch("http://localhost:6060/course/lessonplanner/update", {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        textArr: input,
+        typeInput: id,
+        id: KEY,
+        weeks: weeks,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length !== 0) {
+          console.log("success", data);
+        } else {
+          alert("error: " + data);
+        }
+      });
+  }
 
   function onInputSubmitFromTableMenu(input, id) {
-    if(id === "topics"){
-      setTopicsArr([...topicsArr, input])
-    } else if(id === "ilos"){
-      setILOsArr([...ILOsArr, input])
-    }
-    else if (id === "tlas") {
-      setTLAsArr([...TLAsArr, input])
-    }
-    else if (id === "ats") {
-      setATsArr([...ATsArr, input])
-    }
-    else if (id === "remarks") {
-      setRemarksArr([...RemarksArr, input])
-    }
+    setInputAndId([input, id]);
+    // console.log("from Table", input, id, weeks);
+    // if (id === "topics") {
+    //   setTopicsArr([...topicsArr, input]);
+    // } else if (id === "ilos") {
+    //   setILOsArr([...ILOsArr, input]);
+    // } else if (id === "tlas") {
+    //   setTLAsArr([...TLAsArr, input]);
+    // } else if (id === "ats") {
+    //   setATsArr([...ATsArr, input]);
+    // } else if (id === "remarks") {
+    //   setRemarksArr([...RemarksArr, input]);
+    // }
+    // console.log("outside effect")
   }
+
+  useEffect(() => {
+    if (inputAndId[1] === "topics") {
+      setTopicsArr([...topicsArr, inputAndId[0]]);
+    } else if (inputAndId[1] === "ilos") {
+      setILOsArr([...ILOsArr, inputAndId[0]]);
+    } else if (inputAndId[1] === "tlas") {
+      setTLAsArr([...TLAsArr, inputAndId[0]]);
+    } else if (inputAndId[1] === "ats") {
+      setATsArr([...ATsArr, inputAndId[0]]);
+    } else if (inputAndId[1] === "remarks") {
+      setRemarksArr([...RemarksArr, inputAndId[0]]);
+    }
+  }, [inputAndId]);
+
+  useEffect(() => {
+    if (inputAndId[0] !== undefined) {
+      onUpdate(topicsArr, inputAndId[1], weeks);
+    }
+  }, [topicsArr]);
+
+  useEffect(() => {
+    if (inputAndId[0] !== undefined) {
+      onUpdate(ILOsArr, inputAndId[1], weeks);
+    }
+  }, [ILOsArr]);
+
+  useEffect(() => {
+    if (inputAndId[0] !== undefined) {
+      onUpdate(TLAsArr, inputAndId[1], weeks);
+    }
+  }, [TLAsArr]);
+
+  useEffect(() => {
+    if (inputAndId[0] !== undefined) {
+      onUpdate(ATsArr, inputAndId[1], weeks);
+    }
+  }, [ATsArr]);
+
+  useEffect(() => {
+    if (inputAndId[0] !== undefined) {
+      onUpdate(RemarksArr, inputAndId[1], weeks);
+    }
+  }, [RemarksArr]);
 
   return (
     <div className="ma3">
-      <h1 style={{display:"flex", alignItems: "end", marginBottom: "2px"}}>Week 1</h1>
-      <hr className = "hrForPlanner" />
+      <h1 style={{ display: "flex", alignItems: "end", marginBottom: "2px" }}>
+        Week {weeks}
+      </h1>
+      <hr className="hrForPlanner" />
       <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -88,7 +164,10 @@ export default function CustomizedTables() {
               >
                 <div className="headerCell">
                   <p>Topics</p>
-                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id={"topics"} />
+                  <TableMenu
+                    InputSubmitFromTableMenu={onInputSubmitFromTableMenu}
+                    id={"topics"}
+                  />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -100,7 +179,10 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>ILOs</p>
-                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id={"ilos"} />
+                  <TableMenu
+                    InputSubmitFromTableMenu={onInputSubmitFromTableMenu}
+                    id={"ilos"}
+                  />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -112,7 +194,10 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>TLAs</p>
-                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = {"tlas"} />
+                  <TableMenu
+                    InputSubmitFromTableMenu={onInputSubmitFromTableMenu}
+                    id={"tlas"}
+                  />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -124,7 +209,10 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>ATs</p>
-                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = "ats" />
+                  <TableMenu
+                    InputSubmitFromTableMenu={onInputSubmitFromTableMenu}
+                    id={"ats"}
+                  />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -136,7 +224,10 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>Remarks</p>
-                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = "remarks" />
+                  <TableMenu
+                    InputSubmitFromTableMenu={onInputSubmitFromTableMenu}
+                    id={"remarks"}
+                  />
                 </div>
               </StyledTableCell>
             </TableRow>
