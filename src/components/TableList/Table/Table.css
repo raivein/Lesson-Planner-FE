@@ -26,3 +26,8 @@
   height: 100%;
   position: relative;
 }
+
+.hrForPlanner {
+  width: 100%;
+  border: 1px solid rgb(0, 0, 0);
+}

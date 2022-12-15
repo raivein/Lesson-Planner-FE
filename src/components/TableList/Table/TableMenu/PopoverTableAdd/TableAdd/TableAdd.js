@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 
-export default function MultilineTextFields({ defaultval, onPopOverState }) {
+export default function MultilineTextFields({ defaultval, onPopOverState, InputSubmit }) {
   const [text, setText] = useState("");
 
   function displayText(inputvalue) {
@@ -11,6 +11,7 @@ export default function MultilineTextFields({ defaultval, onPopOverState }) {
       console.log("No input");
     } else {
       console.log(inputvalue);
+      InputSubmit(inputvalue);
       onPopOverState();
     }
   }

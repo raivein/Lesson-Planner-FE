@@ -1,15 +1,14 @@
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import TextFieldsIcon from "@mui/icons-material/TextFields";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PopoverTableAdd from "./PopoverTableAdd/PopoverTableAdd.js";
 import { useEffect, useState } from "react";
 
-export default function PositionedMenu() {
+export default function PositionedMenu({ id, InputSubmitFromTableMenu }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState("");
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,12 +25,17 @@ export default function PositionedMenu() {
   //   handleClose();
   // };
 
+  function onInputSubmitFromTableMenu(input) {
+    InputSubmitFromTableMenu(input, id);
+  }
+
   useEffect(() => {
     console.log("anchorEl", anchorEl);
   }, [anchorEl]);
 
   useEffect(() => {
-    console.log("anchorEl", anchorEl2);
+    console.log("type of input inside TableMenu", anchorEl2);
+    console.log(id);
   }, [anchorEl2]);
 
   return (
@@ -67,7 +71,7 @@ export default function PositionedMenu() {
           }}
           onClose={handleClose}
         >
-          <TextFieldsIcon color="secondary" /> <PopoverTableAdd text={"text"} />
+          <PopoverTableAdd text={"text"} />
         </MenuItem>
         <MenuItem
           onClick={(ev) => {
@@ -75,8 +79,7 @@ export default function PositionedMenu() {
           }}
           onClose={handleClose}
         >
-          <FormatListBulletedIcon color="primary" />{" "}
-          <PopoverTableAdd text={"list"} />
+          <PopoverTableAdd InputSubmitFromTableMenu={onInputSubmitFromTableMenu} text={"list"} />
         </MenuItem>
       </Menu>
     </div>

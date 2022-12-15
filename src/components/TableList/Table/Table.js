@@ -14,6 +14,7 @@ import "tachyons";
 import TableMenu from "./TableMenu/TableMenu.js";
 import "./Table.css";
 import { useState } from 'react';
+import "./Table.css"
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,14 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// ----------- examples -------------------------------------------------
+// ----------- examples pre-states-------------------------------------------------
 const topics = ["topic 1", "topic 2", "topic 3", "topic 4", "topic 5"];
 const ILOs = ["ILO 3", "ILO 4", "ILO 5"];
 const TLAs = ["TLA 1", "TLA 2", "TLA 4", "TLA 5"];
 const ATs = ["AT 1", "AT 2", "AT 3", "AT 4", "AT 5"];
 const Remarks = ["Remarks 1", "Remarks 2", "Remarks 3"];
 const rows = [topics, ILOs, TLAs, ATs, Remarks];
-// ----------- examples -------------------------------------------------
+// ----------- examples pre-states-------------------------------------------------
 
 export default function CustomizedTables() {
   const [topicsArr, setTopicsArr] = useState(topics);
@@ -52,8 +53,28 @@ export default function CustomizedTables() {
   const [ATsArr, setATsArr] = useState(ATs);
   const [RemarksArr, setRemarksArr] = useState(Remarks);
 
+  function onInputSubmitFromTableMenu(input, id) {
+    if(id === "topics"){
+      setTopicsArr([...topicsArr, input])
+    } else if(id === "ilos"){
+      setILOsArr([...ILOsArr, input])
+    }
+    else if (id === "tlas") {
+      setTLAsArr([...TLAsArr, input])
+    }
+    else if (id === "ats") {
+      setATsArr([...ATsArr, input])
+    }
+    else if (id === "remarks") {
+      setRemarksArr([...RemarksArr, input])
+    }
+  }
+
   return (
     <div className="ma3">
+      <h1 style={{display:"flex", alignItems: "end", marginBottom: "2px"}}>Week 1</h1>
+      <hr className = "hrForPlanner" />
+      <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -67,7 +88,7 @@ export default function CustomizedTables() {
               >
                 <div className="headerCell">
                   <p>Topics</p>
-                  <TableMenu id={"topics"} />
+                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id={"topics"} />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -79,7 +100,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>ILOs</p>
-                  <TableMenu id={"ilos"} />
+                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id={"ilos"} />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -91,7 +112,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>TLAs</p>
-                  <TableMenu id = {"tlas"} />
+                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = {"tlas"} />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -103,7 +124,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>ATs</p>
-                  <TableMenu id = "ats" />
+                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = "ats" />
                 </div>
               </StyledTableCell>
               <StyledTableCell
@@ -115,7 +136,7 @@ export default function CustomizedTables() {
               >
                 <div class="headerCell">
                   <p>Remarks</p>
-                  <TableMenu id = "remarks" />
+                  <TableMenu InputSubmitFromTableMenu={onInputSubmitFromTableMenu} id = "remarks" />
                 </div>
               </StyledTableCell>
             </TableRow>

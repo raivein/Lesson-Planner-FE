@@ -2,8 +2,11 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import { useState } from "react";
 import TableAdd from "./TableAdd/TableAdd.js";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import "tachyons";
 
-export default function BasicPopover({ text }) {
+export default function BasicPopover({ text, InputSubmitFromTableMenu }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -17,13 +20,19 @@ export default function BasicPopover({ text }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const [inputText, setinputText] = useState("");
+  function onInputSubmit(input) {
+    InputSubmitFromTableMenu(input);
+  }
 
   return (
     <div>
-      <p aria-describedby={id} variant="contained" onClick={handleClick}>
-        | {text}
-      </p>
+      <div className = "dt" aria-describedby={id} variant="contained" onClick={handleClick}>
+      {text === "text" ? (
+        <><TextFieldsIcon className = "dtc" color="secondary" /><p>n/a</p></> //not yet implemented
+      ) : (
+        <FormatListBulletedIcon className = "dtc" color="primary" />
+      )} <p className = "dtc" >| {text}</p>
+      </div>
       <Popover
         id={id}
         open={open}
@@ -34,7 +43,7 @@ export default function BasicPopover({ text }) {
           horizontal: "left",
         }}
       >
-        <TableAdd onPopOverState={handleClose} defaultval={text} />
+        <TableAdd InputSubmit={onInputSubmit} onPopOverState={handleClose} defaultval={text} />
       </Popover>
     </div>
   );
