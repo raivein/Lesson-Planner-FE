@@ -33,7 +33,7 @@ function Modal({
   const [startDate, setStartDate] = useState("");
 
   function onDeleteCourse() {
-    fetch("http://localhost:6060/deletecourse", {
+    fetch("https://modest-bike-production.up.railway.app/deletecourse", {
       method: "delete",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -54,7 +54,7 @@ function Modal({
   }
 
   function onCreateCourse() {
-    fetch("http://localhost:6060/createlesson", {
+    fetch("https://modest-bike-production.up.railway.app/createlesson", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

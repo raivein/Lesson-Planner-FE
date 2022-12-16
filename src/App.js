@@ -78,7 +78,7 @@ class App extends Component {
 
   //dev mode only to bypas signin
   // autoSignIn = () => {
-  //   fetch("http://localhost:6060/signin", {
+  //   fetch("https://modest-bike-production.up.railway.app//signin", {
   //     method: "post",
   //     headers: { "Content-Type": "application/json" },
   //     body: JSON.stringify({
@@ -103,7 +103,7 @@ class App extends Component {
   };
 
   onGetCourses = () => {
-    fetch(`http://localhost:6060/courses/${this.state.user.email}`)
+    fetch(`https://modest-bike-production.up.railway.app/courses/${this.state.user.email}`)
       .then((response) => {
         return response.json();
       })
@@ -113,7 +113,7 @@ class App extends Component {
   };
 
   onCourseCodes() {
-    fetch("http://localhost:6060/modal/courses")
+    fetch("https://modest-bike-production.up.railway.app/modal/courses")
       .then((response) => {
         return response.json();
       })
