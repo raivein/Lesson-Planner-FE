@@ -55,13 +55,6 @@ export default function CustomizedTables({
   topics,
   remarks,
 }) {
-  const [topicsArr, setTopicsArr] = useState(topics);
-  const [ILOsArr, setILOsArr] = useState(ilos);
-  const [TLAsArr, setTLAsArr] = useState(tlas);
-  const [ATsArr, setATsArr] = useState(ats);
-  const [RemarksArr, setRemarksArr] = useState(remarks);
-  const [inputAndId, setInputAndId] = useState([]);
-
   function onUpdate(input, id, weeks) {
     fetch("http://localhost:6060/course/lessonplanner/update", {
       method: "put",
@@ -100,6 +93,8 @@ export default function CustomizedTables({
     // console.log("outside effect")
   }
 
+  const [inputAndId, setInputAndId] = useState([]);
+
   useEffect(() => {
     if (inputAndId[1] === "topics") {
       setTopicsArr([...topicsArr, inputAndId[0]]);
@@ -114,11 +109,15 @@ export default function CustomizedTables({
     }
   }, [inputAndId]);
 
+  const [topicsArr, setTopicsArr] = useState(topics);
+
   useEffect(() => {
     if (inputAndId[0] !== undefined) {
       onUpdate(topicsArr, inputAndId[1], weeks);
     }
   }, [topicsArr]);
+
+  const [ILOsArr, setILOsArr] = useState(ilos);
 
   useEffect(() => {
     if (inputAndId[0] !== undefined) {
@@ -126,11 +125,15 @@ export default function CustomizedTables({
     }
   }, [ILOsArr]);
 
+  const [TLAsArr, setTLAsArr] = useState(tlas);
+
   useEffect(() => {
     if (inputAndId[0] !== undefined) {
       onUpdate(TLAsArr, inputAndId[1], weeks);
     }
   }, [TLAsArr]);
+
+  const [ATsArr, setATsArr] = useState(ats);
 
   useEffect(() => {
     if (inputAndId[0] !== undefined) {
@@ -138,17 +141,13 @@ export default function CustomizedTables({
     }
   }, [ATsArr]);
 
+  const [RemarksArr, setRemarksArr] = useState(remarks);
+
   useEffect(() => {
     if (inputAndId[0] !== undefined) {
       onUpdate(RemarksArr, inputAndId[1], weeks);
     }
   }, [RemarksArr]);
-
-  //------------------
-  function getText(ctrl) {
-    console.log(ctrl);
-  }
-  //------------------
 
   return (
     <div className="ma3">
@@ -245,13 +244,22 @@ export default function CustomizedTables({
             >
               <ul>
                 {topicsArr.map((topic) => {
-                  return <li>{topic}{" "}<button onClick={()=>{
-                    const index = topicsArr.indexOf(topic);
-                    if (index > -1) {
-                      topicsArr.splice(index, 1);
-                    }
-                    setTopicsArr([...topicsArr])
-                  }}>x</button></li>;
+                  return (
+                    <li>
+                      {topic}{" "}
+                      <button
+                        onClick={() => {
+                          const index = topicsArr.indexOf(topic);
+                          if (index > -1) {
+                            topicsArr.splice(index, 1);
+                          }
+                          setTopicsArr([...topicsArr]);
+                        }}
+                      >
+                        x
+                      </button>
+                    </li>
+                  );
                 })}
               </ul>
             </StyledTableCell>
@@ -261,7 +269,22 @@ export default function CustomizedTables({
             >
               <ul>
                 {ILOsArr.map((ILO) => {
-                  return <li>{ILO}</li>;
+                  return (
+                    <li>
+                      {ILO}{" "}
+                      <button
+                        onClick={() => {
+                          const index = ILOsArr.indexOf(ILO);
+                          if (index > -1) {
+                            ILOsArr.splice(index, 1);
+                          }
+                          setILOsArr([...ILOsArr]);
+                        }}
+                      >
+                        x
+                      </button>
+                    </li>
+                  );
                 })}
               </ul>
             </StyledTableCell>
@@ -271,7 +294,20 @@ export default function CustomizedTables({
             >
               <ul>
                 {TLAsArr.map((TLA) => {
-                  return <li>{TLA}</li>;
+                  return (
+                    <li>
+                      {TLA}{" "}
+                      <button
+                        onClick={() => {
+                          const index = TLAsArr.indexOf(TLA);
+                          if (index > -1) {
+                            TLAsArr.splice(index, 1);
+                          }
+                          setTLAsArr([...TLAsArr]);
+                        }}
+                      >x</button>
+                    </li>
+                  );
                 })}
               </ul>
             </StyledTableCell>
@@ -281,7 +317,20 @@ export default function CustomizedTables({
             >
               <ul>
                 {ATsArr.map((AT) => {
-                  return <li>{AT}</li>;
+                  return (
+                    <li>
+                      {AT}{" "}
+                      <button
+                        onClick={() => {
+                          const index = ATsArr.indexOf(AT);
+                          if (index > -1) {
+                            ATsArr.splice(index, 1);
+                          }
+                          setATsArr([...ATsArr]);
+                        }}
+                      >x</button>
+                    </li>
+                  );
                 })}
               </ul>
             </StyledTableCell>
@@ -291,7 +340,22 @@ export default function CustomizedTables({
             >
               <ul>
                 {RemarksArr.map((Remark) => {
-                  return <li>{Remark}</li>;
+                  return (
+                    <li>
+                      {Remark}{" "}
+                      <button
+                        onClick={() => {
+                          const index = RemarksArr.indexOf(Remark);
+                          if (index > -1) {
+                            RemarksArr.splice(index, 1);
+                          }
+                          setRemarksArr([...RemarksArr]);
+                        }}
+                      >
+                        x
+                      </button>
+                    </li>
+                  );
                 })}
               </ul>
             </StyledTableCell>
