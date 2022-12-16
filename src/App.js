@@ -13,6 +13,25 @@ import TableList from "./components/TableList/TableList.js";
 import ParticlesBg from "particles-bg";
 import MetaData from "./compoents/MetaData/MetaData.js";
 
+const initialState = {
+  route: "signin",
+  isSignedIn: false,
+  robots: [],
+  courses: [],
+  searchfield: "",
+  openModal: false,
+  modalKind: "",
+  delete: false,
+  coursesToDelete: [],
+  coursesToOpen: "",
+  courseClicked: "",
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    joined: "",
+  },
+};
 
 class App extends Component {
   // create the state inside the parent application
@@ -79,23 +98,8 @@ class App extends Component {
 
   resetState = () => {
     this.setState({
-      openModal: false,
+      initialState
     });
-    Object.assign(this.state.user, {
-      id: "",
-      name: "",
-      email: "",
-      joined: "",
-    });
-    this.setState({ robots: [] });
-    this.setState({ courses: [] });
-    this.setState({ searchfield: "" });
-    this.setState({ openModal: false });
-    this.setState({ modalKind: "" });
-    this.setState({ delete: false });
-    this.setState({ coursesToDelete: [] });
-    this.setState({ coursesToOpen: "" });
-    this.setState({ courseClicked: "" });
   };
 
   onGetCourses = () => {
@@ -235,12 +239,12 @@ class App extends Component {
           <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : this.state.route === "planner" ? (
           <>
-            <MetaData           
-                filteredcourses={filteredcourses}/>
+            <MetaData filteredcourses={filteredcourses} />
             {/* <Scroll> */}
-              <TableList
-                // filteredcourses={filteredcourses}
-                coursesToOpen={this.state.coursesToOpen} />
+            <TableList
+              // filteredcourses={filteredcourses}
+              coursesToOpen={this.state.coursesToOpen}
+            />
             {/* </Scroll> */}
           </>
         ) : (
